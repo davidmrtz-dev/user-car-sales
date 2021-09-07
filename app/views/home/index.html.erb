@@ -1,0 +1,39 @@
+<%= render "shared/navbar" %>
+<% name = current_user.present? ? current_user.email : 'Stranger' %>
+
+<h1>Welcome, <%= name %> </h1>
+<div>
+    <% if @cars.count == 0 %>
+      'No available cars'
+    <% else %>
+      <h1>Cars</h1>
+      <table>
+        <tr>
+          <th><%= link_to "Model", :sort => "model"%> </th>
+          <th><%= link_to "Brand", :sort => "brand"%> </th>
+          <th><%= link_to "Year", :sort => "year"%> </th>
+          <th><%= link_to "DealerShip", :sort => "dealer_ship_id"%> </th>
+          <th><%= link_to "New", :sort => "used"%> </th>
+        </tr>
+        <% @cars.each do |car| %>
+          <tr>
+            <td><%= car.model%></td>
+            <td><%= car.brand %></td>
+            <td><%= car.year %></td>
+            <td><%= car.dealer_ship.name %></td>
+            <td><%= car.used.blank? ? 'No' : 'Yes' %></td>
+            <td><%= link_to 'Show', car %></td>
+            <% if user_signed_in? && current_user.admin? %>
+              <td><%= link_to 'Edit', edit_car_path(car) %></td>
+              <td><%= link_to 'Destroy', car, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+
+    <br>
+    <% if user_signed_in? && current_user.admin? %>
+      <%= link_to 'New Car', new_car_path %>
+    <% end %>
+</div>
