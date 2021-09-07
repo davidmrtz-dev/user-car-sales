@@ -1,6 +1,6 @@
 # Used Car Sales Inventory :rocket:
 
-## Getting Started
+## How to run locally
 
 To get started with the app, clone the repo and then install the needed gems:
 
